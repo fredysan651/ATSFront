@@ -1,0 +1,33 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.toolbar-search {
+  flex: 1;
+  min-width: 220px;
+}
+
+.status-select {
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.status-select.badge-entrevista {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.actions {
+  text-align: right;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}

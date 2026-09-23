@@ -1,0 +1,62 @@
+<header class="page-header toolbar">
+  <div>
+    <h1>Vacantes</h1>
+    <p>{{ openCount() }} vacantes abiertas</p>
+  </div>
+  <button class="btn" (click)="toggleForm()">
+    {{ showForm() ? 'Cancelar' : '+ Nueva vacante' }}
+  </button>
+</header>
+
+@if (showForm()) {
+  <form class="card job-form" (submit)="onAdd($event)">
+    <div class="form-grid">
+      <label>
+        Título
+        <input class="input" name="title" placeholder="Ej. Desarrollador Angular" required />
+      </label>
+      <label>
+        Departamento
+        <input class="input" name="department" placeholder="Ej. Tecnología" required />
+      </label>
+      <label>
+        Ubicación
+        <input class="input" name="location" placeholder="Ej. Remoto" required />
+      </label>
+      <label>
+        Tipo
+        <input class="input" name="type" placeholder="Ej. Tiempo completo" required />
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn" type="submit">Crear vacante</button>
+    </div>
+  </form>
+}
+
+<section class="cards-grid">
+  @for (job of jobs(); track job.id) {
+    <div class="card job-card">
+      <div class="job-card-header">
+        <span class="badge badge-{{ job.status }}">{{ statusLabel(job.status) }}</span>
+        <button class="btn-danger" (click)="remove(job.id)">Eliminar</button>
+      </div>
+      <h2 class="job-card-title">{{ job.title }}</h2>
+      <div class="job-card-meta">
+        <span> {{ job.department }}</span>
+        <span> {{ job.location }}</span>
+        <span> {{ job.type }}</span>
+      </div>
+      <label class="status-picker">
+        Estado
+        <select class="select" [value]="job.status" (change)="onChangeStatus(job, $event)">
+          @for (status of statuses; track status) {
+            <option [value]="status">{{ statusLabel(status) }}</option>
+          }
+        </select>
+      </label>
+    </div>
+  } @empty {
+    <div class="card empty">No hay vacantes registradas</div>
+  }
+</section>

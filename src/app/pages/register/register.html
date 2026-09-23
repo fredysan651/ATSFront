@@ -1,0 +1,52 @@
+<div class="login-wrapper">
+  <section class="login-card">
+    <header class="login-header">
+      <h1>Crear Cuenta</h1>
+      <p>Únete a la plataforma FUSOFT ATS</p>
+    </header>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="fullName">Nombre completo</label>
+        <input type="text" id="fullName" class="form-control" formControlName="fullName" placeholder="Ej. Alejandro Aguilera">
+        @if (registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched) {
+          <span class="error-msg">El nombre es obligatorio y debe tener al menos 3 letras.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder="ejemplo@uniempresarial.edu.co">
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <span class="error-msg">Ingresa un correo electrónico válido.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" class="form-control" formControlName="password" placeholder="••••••••">
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <span class="error-msg">La contraseña debe tener mínimo 6 caracteres.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar Contraseña</label>
+        <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" placeholder="••••••••">
+        @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
+          <span class="error-msg">Las contraseñas no coinciden.</span>
+        }
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="registerForm.invalid || isLoading()">
+        {{ isLoading() ? 'Registrando...' : 'Crear mi cuenta' }}
+      </button>
+
+    </form>
+
+    <div class="login-footer">
+      <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
+    </div>
+  </section>
+</div>

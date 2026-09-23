@@ -1,0 +1,57 @@
+<div class="login-wrapper">
+  <section class="login-card">
+    <header class="login-header">
+      <h1>Iniciar Sesión</h1>
+      <p>Ingresa tus credenciales para continuar</p>
+    </header>
+
+    <!-- Formulario enlazado al FormGroup de TypeScript -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          formControlName="email" 
+          placeholder="ejemplo@uniempresarial.edu.co"
+        >
+        <!-- Validación básica de UI -->
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <span class="error-msg">Ingresa un correo electrónico válido</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="form-control" 
+          formControlName="password" 
+          placeholder="••••••••"
+        >
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <span class="error-msg">La contraseña es obligatoria (mínimo 6 caracteres)</span>
+        }
+      </div>
+
+      <!-- Mensaje de error general (ej: credenciales incorrectas) -->
+      @if (errorMessage()) {
+        <div class="error-msg" style="text-align: center; margin-bottom: 1rem; font-weight: 600;">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="loginForm.invalid || isLoading()">
+        {{ isLoading() ? 'Autenticando...' : 'Ingresar al sistema' }}
+      </button>
+
+    </form>
+
+    <div class="login-footer">
+      <p>¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
+    </div>
+  </section>
+</div>

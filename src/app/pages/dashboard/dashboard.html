@@ -1,0 +1,75 @@
+<header class="page-header">
+  <h1>Dashboard</h1>
+  <p>Resumen de tu proceso de selección</p>
+</header>
+
+<section class="stats-grid">
+  @for (stat of stats(); track stat.label) {
+    <div class="stat-card">
+      <div class="stat-icon stat-{{ stat.color }}">{{ stat.icon }}</div>
+      <div>
+        <p class="stat-value">{{ stat.value }}</p>
+        <p class="stat-label">{{ stat.label }}</p>
+      </div>
+    </div>
+  }
+</section>
+
+<div class="grid-2">
+  <section class="card">
+    <div class="card-header">
+      <h2>Últimos candidatos</h2>
+      <a routerLink="/candidatos">Ver todos</a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Candidato</th>
+          <th>Vacante</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cand of recentCandidates(); track cand.id) {
+          <tr>
+            <td>
+              <div class="candidate-cell">
+                <div class="avatar">{{ initials(cand.name) }}</div>
+                <div>
+                  <div class="candidate-name">{{ cand.name }}</div>
+                  <div class="candidate-email">{{ cand.email }}</div>
+                </div>
+              </div>
+            </td>
+            <td>{{ cand.jobTitle }}</td>
+            <td>{{ formatDate(cand.appliedDate) }}</td>
+            <td><span class="badge badge-{{ cand.status }}">{{ statusLabel(cand.status) }}</span></td>
+          </tr>
+        } @empty {
+          <tr><td colspan="4" class="empty">No hay candidatos</td></tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <div class="card-header">
+      <h2>Vacantes abiertas</h2>
+      <a routerLink="/vacantes">Ver todas</a>
+    </div>
+    <ul class="job-list">
+      @for (job of openJobs(); track job.id) {
+        <li>
+          <div>
+            <div class="job-title">{{ job.title }}</div>
+            <div class="job-meta">{{ job.department }} · {{ job.location }}</div>
+          </div>
+          <span class="badge badge-abierta">Abierta</span>
+        </li>
+      } @empty {
+        <li class="empty">No hay vacantes abiertas</li>
+      }
+    </ul>
+  </section>
+</div>

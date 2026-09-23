@@ -1,0 +1,35 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-logo">ATS</span>
+      <span class="brand-name">HireTrack</span>
+    </div>
+    <nav class="nav">
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <span>📊</span> Dashboard
+      </a>
+      <a routerLink="/candidatos" routerLinkActive="active">
+        <span>👥</span> Candidatos
+      </a>
+      <a routerLink="/vacantes" routerLinkActive="active">
+        <span>💼</span> Vacantes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user">
+        <div class="user-avatar">FG</div>
+        <div class="user-info">
+          <span class="user-name">Fredy</span>
+          <span class="user-role">Reclutador</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

@@ -1,0 +1,71 @@
+<header class="page-header">
+  <h1>Candidatos</h1>
+  <p>Gestiona el estado de tus candidatos</p>
+</header>
+
+<div class="toolbar">
+  <input
+    class="input toolbar-search"
+    type="search"
+    placeholder="Buscar por nombre, email o vacante..."
+    [value]="search()"
+    (input)="onSearch($event)"
+  />
+  <select class="select" [value]="statusFilter()" (change)="onStatusFilter($event)">
+    <option value="todos">Todos los estados</option>
+    @for (status of statuses; track status) {
+      <option [value]="status">{{ statusLabel(status) }}</option>
+    }
+  </select>
+</div>
+
+<section class="card">
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Candidato</th>
+          <th>Vacante</th>
+          <th>Fecha de aplicación</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cand of filteredCandidates(); track cand.id) {
+          <tr>
+            <td>
+              <div class="candidate-cell">
+                <div class="avatar">{{ initials(cand.name) }}</div>
+                <div>
+                  <div class="candidate-name">{{ cand.name }}</div>
+                  <div class="candidate-email">{{ cand.email }}</div>
+                </div>
+              </div>
+            </td>
+            <td>{{ cand.jobTitle }}</td>
+            <td>{{ formatDate(cand.appliedDate) }}</td>
+            <td>
+              <select
+                class="select status-select badge-{{ cand.status }}"
+                [value]="cand.status"
+                (change)="onChangeStatus(cand, $event)"
+              >
+                @for (status of statuses; track status) {
+                  <option [value]="status">{{ statusLabel(status) }}</option>
+                }
+              </select>
+            </td>
+            <td class="actions">
+              <button class="btn-danger" (click)="onDelete(cand.id)">Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="empty">No se encontraron candidatos</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
